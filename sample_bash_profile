@@ -2,16 +2,15 @@
 # then open that file and copy the remainder of this stuff into it. 
 # Come back up here when done.
 
-# The prompt is now delightfully called "The Prompt, and decorated with a star" Every line is timestamped, and if you're in a git branch, the name of the branch will be displayed.
+# The prompt is now delightfully called "The Prompt", and decorated with a star. Every line is timestamped, and if you're in a git repository, the name of the branch will be displayed.
 
 # Use those export and path things with care, make sure they do what you want them to do, or comment them out.
 
-# If you're using Sublime Text 2, go to the terminal and type 'open /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
+# If you're using Sublime Text 2, check if you have the 'subl' shortcut in place. 
 
+# If not: go to the terminal and type 'open /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
 # Did that open Sublime? Good. Then type 'ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl'
-
-# You now have the 'subl' shortcut in place.
-
+# You now have the 'subl' shortcut
 
 # Configuring Our Prompt
 # ======================
@@ -168,6 +167,9 @@ function extract () {
   alias gba="git branch -a"
   alias gcam="git commit -am"
   alias gbb="git branch -b"
+  
+  # Sublime Text
+  alias subl="sublime"
 
 
 # Case-Insensitive Auto Completion
