@@ -170,7 +170,8 @@ function extract () {
   alias gcm="git commit -m"
 
   
-  # Sublime Text
+# Misc
+  alias be="bundle exec"
   alias subl="sublime"
 
 
