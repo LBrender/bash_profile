@@ -167,6 +167,8 @@ function extract () {
   alias gba="git branch -a"
   alias gcam="git commit -am"
   alias gbb="git branch -b"
+  alias gcm="git commit -m"
+
   
   # Sublime Text
   alias subl="sublime"
