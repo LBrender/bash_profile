@@ -12,6 +12,9 @@
 # Did that open Sublime? Good. Then type 'ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl'
 # You now have the 'subl' shortcut
 
+# Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
+# Now git will use --rebase by defualt
+
 # Configuring Our Prompt
 # ======================
 
