@@ -175,7 +175,7 @@ function extract () {
   
 # Misc
   alias be="bundle exec"
-  alias subl="sublime"
+  # alias subl="sublime" # This seemed like a good idea once, but now it seems to screw everything up.
 
 
 # Case-Insensitive Auto Completion
