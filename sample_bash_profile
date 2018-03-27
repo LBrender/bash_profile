@@ -133,6 +133,16 @@ function desktop {
   cd /Users/$USER/Desktop/$@
 }
 
+# USE: newsela
+function newsela {
+  cd ~/Development/newsela
+}
+
+# USE: development
+function development {
+  cd ~/Development
+}
+
 # A function to easily grep for a matching process
 # USE: psg postgres
 function psg {
