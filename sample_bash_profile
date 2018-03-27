@@ -8,8 +8,8 @@
 
 # If you're using Sublime Text 2, check if you have the 'subl' shortcut in place. 
 
-# If not: go to the terminal and type 'open /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
-# Did that open Sublime? Good. Then type 'ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl'
+# If not: go to the terminal and type 'open /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+# Did that open Sublime? Good. Then type 'ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl' <- Make sure that last directory exists first, and if it doesn't, create it.
 # You now have the 'subl' shortcut
 
 # Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
