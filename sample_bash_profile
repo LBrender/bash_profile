@@ -1,8 +1,7 @@
-# To start with, type 'touch ~/.bash_profile'
-# then open that file and copy the remainder of this stuff into it. 
-# Come back up here when done.
+# Type 'touch ~/.bash_profile', open that file and copy the remainder of this stuff into it.
 
-# The prompt is now delightfully called "The Prompt", and decorated with a star. Every line is timestamped, and if you're in a git repository, the name of the branch will be displayed.
+# The prompt is now delightfully called "The Prompt", and decorated with a star.
+# Every line is timestamped, and if you're in a git repository, the name of the branch will be displayed.
 
 # Use those export and path things with care, make sure they do what you want them to do, or comment them out.
 
@@ -11,6 +10,18 @@
 # If not: go to the terminal and type 'open /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 # Did that open Sublime? Good. Then type 'ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl' <- Make sure that last directory exists first, and if it doesn't, create it.
 # You now have the 'subl' shortcut
+
+# Set up rulers in Sublime: Open a .py file. Go to "Sublime Text", "Preferences", "Settings - Syntax Specific"
+# In the file that opens, add "rulers": [80]" inside of the hash. Now all files that end in .py will display
+# a ruler at the 80th character.
+
+# Set up key bindings in Sublime: Go to "Sublime Text", "Preferences", "Key Bindings". In the file that opens,
+# add something like this:  {"keys": ["p", "d", "b", " "], "command": "insert_snippet", "args": {"contents": "import pdb; pdb.set_trace()"} },
+# Now "pdb " will always be replaced properly.
+
+# Get the coffeescript.tmlanguage and the coffeescript.tmpreferences files from this repo, and copy them into
+# Library/Application\ Support/Sublime\ Text\ 3/Packages. That's designed to work with Sublime 2, but it
+# works just as well with 3. Restart Sublime, and you'll have syntax highlighting for coffeescript.
 
 # Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
 # Now git will use --rebase by defualt
@@ -172,8 +183,7 @@ function extract () {
   alias gbb="git branch -b"
   alias gcm="git commit -m"
 
-  
-# Misc
+  # Misc
   alias be="bundle exec"
   # alias subl="sublime" # This seemed like a good idea once, but now it seems to screw everything up.
 
