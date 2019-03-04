@@ -143,6 +143,11 @@ function development {
   cd ~/Development
 }
 
+# USE: twilio-delete $CALL_SID - sends a DELETE request with inputted call sid
+function twilio-delete () {
+  curl 'https://api.twilio.com/2010-04-01/Accounts/AC6d7cbd146b8c78fc99d8cb680c9d7fb7/Calls/'$@'.json' -X DELETE -u AC6d7cbd146b8c78fc99d8cb680c9d7fb7:65e2d7f61b44f98d4609c2202a5f6fa6;
+}
+
 # A function to easily grep for a matching process
 # USE: psg postgres
 function psg {
