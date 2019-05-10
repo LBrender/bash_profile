@@ -83,14 +83,6 @@
     # This variable configures git to not require a message when you merge.
     export GIT_MERGE_AUTOEDIT='no'
 
-    # Editors
-    # Tells your shell that when a program requires various editors, use sublime.
-    # The -w flag tells your shell to wait until sublime exits
-    export VISUAL="subl -w"
-    export SVN_EDITOR="subl -w"
-    export GIT_EDITOR="subl -w"
-    export EDITOR="subl -w"
-
   # Paths
 
     # The USR_PATHS variable will just store all relevant /usr paths for easier usage
@@ -104,7 +96,7 @@
     # storing the binaries (programs) that our system would want.
     # Also, Homebrew adopts this convetion so things installed via Homebrew
     # get symlinked into /usr/local
-    # export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin"
+    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin"
 
     # Hint: You can interpolate a variable into a string by using the $VARIABLE notation as below.
 
@@ -120,6 +112,10 @@
     # For example, mine is:
     # /Users/avi/.rvm/gems/ruby-1.9.3-p392/bin:/Users/avi/.rvm/gems/ruby-1.9.3-p392@global/bin:/Users/avi/.rvm/rubies/ruby-1.9.3-p392/bin:/Users/avi/.rvm/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/mysql/bin:/usr/local/share/python:/bin:/usr/sbin:/sbin:
 
+    # I've got Arcanist installed in my Development folder (maybe I should re-think that but wev). I'm
+    # adding its location to the PATH variable so the command 'arc' can be found.
+    export PATH="/Users/katebrender/Development/arcanist/bin:$PATH"
+
 # Helpful Functions
 # =====================
 
@@ -133,14 +129,19 @@ function desktop {
   cd /Users/$USER/Desktop/$@
 }
 
-# USE: newsela
-function newsela {
-  cd ~/Development/newsela
+# USE: cloud-core
+function cloud {
+  cd ~/Development/cloud-core
 }
 
 # USE: development
 function development {
   cd ~/Development
+}
+
+# USE: notes
+function notes {
+  cd ~/Desktop/notes
 }
 
 # USE: twilio-delete $CALL_SID - sends a DELETE request with inputted call sid
@@ -219,3 +220,10 @@ function extract () {
   # Mandatory loading of RVM into the shell
   # This must be the last line of your bash_profile always
   [[ -s "/Users/$USER/.rvm/scripts/rvm" ]] && source "/Users/$USER/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Nylas stuff:
+
+source $(brew --prefix autoenv)/activate.sh
