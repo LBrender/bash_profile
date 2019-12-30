@@ -29,10 +29,6 @@
 # Configuring Our Prompt
 # ======================
 
-  # if you install git via homebrew, or install the bash autocompletion via homebrew, you get __git_ps1 which you can use in the PS1
-  # to display the git branch.  it's supposedly a bit faster and cleaner than manually parsing through sed. i dont' know if you care 
-  # enough to change it
-
   # This function is called in your prompt to output your active git branch.
   function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -49,13 +45,16 @@
     local  LIGHT_GRAY="\[\033[0;37m\]"
     local        CYAN="\[\033[0;36m\]"
     local  LIGHT_CYAN="\[\033[1;36m\]"
-    local  NO_COLOUR="\[\033[0m\]"
+    local   NO_COLOUR="\[\033[0m\]"
+
+    local CURRENT_DIR="\W"
+    local        TIME="\t"
 
     local        CHAR="☆"
     # ♥ ☆ - Keeping some cool ASCII Characters for reference
 
     # Here is where we actually export the PS1 Variable which stores the text for your prompt
-    export PS1="[\e[37;44;1m\]\t\[\e[0m\]]$BLUE\$(parse_git_branch) \[\e[32m\]\W\[\e[0m\]\n\[\e[0;34m\]The Prompt $CHAR \[\e[0m\]"
+    export PS1="[\e[37;44;1m\]$TIME\[\e[0m\]]$BLUE\$(parse_git_branch) \[\e[32m\]$CURRENT_DIR\[\e[0m\]\n\[\e[0;34m\]The Prompt $CHAR \[\e[0m\]"
       PS2='> '
       PS4='+ '
     }
@@ -65,9 +64,6 @@
 
   # For more prompt coolness, check out Halloween Bash:
   # http://xta.github.io/HalloweenBash/
-
-  # If you break your prompt, just delete the last thing you did.
-  # And that's why it's good to keep your dotfiles in git too.
 
 # Environment Variables
 # =====================
