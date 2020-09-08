@@ -29,6 +29,10 @@
 # Configuring Our Prompt
 # ======================
 
+  # if you install git via homebrew, or install the bash autocompletion via homebrew, you get __git_ps1 which you can use in the PS1
+  # to display the git branch.  it's supposedly a bit faster and cleaner than manually parsing through sed. i dont' know if you care 
+  # enough to change it
+
   # This function is called in your prompt to output your active git branch.
   function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -40,21 +44,11 @@
     local         RED="\[\033[0;31m\]" # This syntax is some weird bash color thing I never
     local   LIGHT_RED="\[\033[1;31m\]" # really understood
     local        BLUE="\[\033[0;34m\]"
-    local       GREEN="\[\033[0;32m\]"
-    local        GRAY="\[\033[1;30m\]"
-    local  LIGHT_GRAY="\[\033[0;37m\]"
-    local        CYAN="\[\033[0;36m\]"
-    local  LIGHT_CYAN="\[\033[1;36m\]"
-    local   NO_COLOUR="\[\033[0m\]"
-
-    local CURRENT_DIR="\W"
-    local        TIME="\t"
-
     local        CHAR="☆"
     # ♥ ☆ - Keeping some cool ASCII Characters for reference
 
     # Here is where we actually export the PS1 Variable which stores the text for your prompt
-    export PS1="[\e[37;44;1m\]$TIME\[\e[0m\]]$BLUE\$(parse_git_branch) \[\e[32m\]$CURRENT_DIR\[\e[0m\]\n\[\e[0;34m\]The Prompt $CHAR \[\e[0m\]"
+    export PS1="\[\e]2;\u@\h\a[\[\e[37;44;1m\]\t\[\e[0m\]]$BLUE\$(parse_git_branch) \[\e[32m\]\W\[\e[0m\]\n\[\e[0;34m\]The Prompt $CHAR \[\e[0m\]"
       PS2='> '
       PS4='+ '
     }
@@ -64,6 +58,9 @@
 
   # For more prompt coolness, check out Halloween Bash:
   # http://xta.github.io/HalloweenBash/
+
+  # If you break your prompt, just delete the last thing you did.
+  # And that's why it's good to keep your dotfiles in git too.
 
 # Environment Variables
 # =====================
@@ -99,7 +96,7 @@
     # storing the binaries (programs) that our system would want.
     # Also, Homebrew adopts this convetion so things installed via Homebrew
     # get symlinked into /usr/local
-    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin"
+    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
 
     # Hint: You can interpolate a variable into a string by using the $VARIABLE notation as below.
 
@@ -132,9 +129,13 @@ function desktop {
   cd /Users/$USER/Desktop/$@
 }
 
-# USE: cloud-core
+# USE: cloud
 function cloud {
-  cd ~/Development/cloud-core
+  eval "$(pyenv init - bash)" && eval "$(pyenv virtualenv-init -)" && cd ~/Development/cloud-core
+}
+
+function tf {
+  cd /Users/katebrender/Development/cloud-core/nylas/infrastructure/terraform/aws/
 }
 
 # USE: development
@@ -145,6 +146,11 @@ function development {
 # USE: notes
 function notes {
   cd ~/Desktop/notes
+}
+
+# USE: twilio-delete $CALL_SID - sends a DELETE request with inputted call sid
+function twilio-delete () {
+  curl 'https://api.twilio.com/2010-04-01/Accounts/AC6d7cbd146b8c78fc99d8cb680c9d7fb7/Calls/'$@'.json' -X DELETE -u AC6d7cbd146b8c78fc99d8cb680c9d7fb7:65e2d7f61b44f98d4609c2202a5f6fa6;
 }
 
 # A function to easily grep for a matching process
@@ -196,7 +202,9 @@ function extract () {
   alias gcam="git commit -am"
   alias gbb="git branch -b"
   alias gcm="git commit -m"
-
+  alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
+  eval "$(hub alias -s)"
+  
   # Misc
   alias be="bundle exec"
   # alias subl="sublime" # This seemed like a good idea once, but now it seems to screw everything up.
@@ -222,6 +230,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Nylas stuff:
+# Nylas stuff
+# This helps your computer find programs installed by Homebrew    
+# export PATH="/usr/local/bin:$PATH"     
+# This lets pyenv automatically activate your virtualenv when you cd into cloud-core    
+# eval `pyenv init - bash`    
+# eval "$(pyenv virtualenv-init -)"     
 
-source $(brew --prefix autoenv)/activate.sh
+# This aliases git to hub so you get GitHub commands under regular git    
+# eval "$(hub alias -s)"
