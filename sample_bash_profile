@@ -101,7 +101,9 @@
     # storing the binaries (programs) that our system would want.
     # Also, Homebrew adopts this convetion so things installed via Homebrew
     # get symlinked into /usr/local
-    export USR_PATHS="~/bin/subl:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
+    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
+
+    export SUBLIME_PATH="~/bin/subl"
 
     # Hint: You can interpolate a variable into a string by using the $VARIABLE notation as below.
 
@@ -111,15 +113,8 @@
     # Our PATH variable is special and very important. Whenever we type a command into our shell,
     # it will try to find that command within a directory that is defined in our PATH.
     # Read http://blog.seldomatt.com/blog/2012/10/08/bash-and-the-one-true-path/ for more on that.
-    export PATH="$USR_PATHS:$PATH"
+    export PATH="$SUBLIME_PATH:$USR_PATHS:$PATH"
 
-    # If you go into your shell and type: $PATH you will see the output of your current path.
-    # For example, mine is:
-    # /Users/avi/.rvm/gems/ruby-1.9.3-p392/bin:/Users/avi/.rvm/gems/ruby-1.9.3-p392@global/bin:/Users/avi/.rvm/rubies/ruby-1.9.3-p392/bin:/Users/avi/.rvm/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/mysql/bin:/usr/local/share/python:/bin:/usr/sbin:/sbin:
-
-    # I've got Arcanist installed in my Development folder (maybe I should re-think that but wev). I'm
-    # adding its location to the PATH variable so the command 'arc' can be found.
-    export PATH="/Users/katebrender/Development/arcanist/bin:$PATH"
 
 # Helpful Functions
 # =====================
@@ -139,23 +134,19 @@ function cloud {
   eval "$(pyenv init - bash)" && eval "$(pyenv virtualenv-init -)" && cd ~/Development/cloud-core
 }
 
-function tf {
-  cd /Users/katebrender/Development/cloud-core/nylas/infrastructure/terraform/aws/
-}
-
 # USE: development
 function development {
   cd ~/Development
 }
 
+# USE: boost
+function boost {
+  cd ~/Development/Boost
+}
+
 # USE: notes
 function notes {
   cd ~/Desktop/notes
-}
-
-# USE: twilio-delete $CALL_SID - sends a DELETE request with inputted call sid
-function twilio-delete () {
-  curl 'https://api.twilio.com/2010-04-01/Accounts/AC6d7cbd146b8c78fc99d8cb680c9d7fb7/Calls/'$@'.json' -X DELETE -u AC6d7cbd146b8c78fc99d8cb680c9d7fb7:65e2d7f61b44f98d4609c2202a5f6fa6;
 }
 
 # A function to easily grep for a matching process
@@ -226,11 +217,6 @@ function extract () {
     . `brew --prefix`/etc/bash_completion
   fi
 
-  # RVM
-  # Mandatory loading of RVM into the shell
-  # This must be the last line of your bash_profile always
-  [[ -s "/Users/$USER/.rvm/scripts/rvm" ]] && source "/Users/$USER/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# BOOST STUFF
+export AWS_PROFILE=boost-staging
 
