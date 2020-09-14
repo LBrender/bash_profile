@@ -1,14 +1,19 @@
 # Type 'touch ~/.bash_profile', open that file and copy the remainder of this stuff into it.
 
+# Open a new terminal and verfiy that the bash_profile is sourced. If not...are you using zsh instead of bash?
+
+# type 'echo $SHELL`. If the result is `bin/zsh` then you're using the wrong shell language. Go to 
+# Terminal > Preferences. In "Shells open with:" you should select "Command", and enter "/bin/bash" as the command.
+
 # The prompt is now delightfully called "The Prompt", and decorated with a star.
 # Every line is timestamped, and if you're in a git repository, the name of the branch will be displayed.
 
-# Use those export and path things with care, make sure they do what you want them to do, or comment them out.
-
-# If you're using Sublime Text 2, check if you have the 'subl' shortcut in place. 
+# If you're using Sublime Text 3, check if you have the 'subl' shortcut in place. 
 
 # If not: go to the terminal and type 'open /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-# Did that open Sublime? Good. Then type 'ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl' <- Make sure that last directory exists first, and if it doesn't, create it.
+# Did that open Sublime? Good. Do you have `~/bin/subl` in your PATH? Good. Then type 
+# 'ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl' 
+# (Make sure that last directory exists first, and if it doesn't, create it.)
 # You now have the 'subl' shortcut
 
 # Set up rulers in Sublime: Open a .py file. Go to "Sublime Text", "Preferences", "Settings - Syntax Specific"
@@ -96,7 +101,7 @@
     # storing the binaries (programs) that our system would want.
     # Also, Homebrew adopts this convetion so things installed via Homebrew
     # get symlinked into /usr/local
-    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
+    export USR_PATHS="~/bin/subl:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
 
     # Hint: You can interpolate a variable into a string by using the $VARIABLE notation as below.
 
@@ -203,7 +208,6 @@ function extract () {
   alias gbb="git branch -b"
   alias gcm="git commit -m"
   alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
-  eval "$(hub alias -s)"
   
   # Misc
   alias be="bundle exec"
@@ -230,12 +234,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Nylas stuff
-# This helps your computer find programs installed by Homebrew    
-# export PATH="/usr/local/bin:$PATH"     
-# This lets pyenv automatically activate your virtualenv when you cd into cloud-core    
-# eval `pyenv init - bash`    
-# eval "$(pyenv virtualenv-init -)"     
-
-# This aliases git to hub so you get GitHub commands under regular git    
-# eval "$(hub alias -s)"
