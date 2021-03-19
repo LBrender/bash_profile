@@ -26,7 +26,11 @@
 
 # Get the coffeescript.tmlanguage and the coffeescript.tmpreferences files from this repo, and copy them into
 # Library/Application\ Support/Sublime\ Text\ 3/Packages. That's designed to work with Sublime 2, but it
-# works just as well with 3. Restart Sublime, and you'll have syntax highlighting for coffeescript.
+# works just as well with 3. 
+# cd to `/Users/katebrender/Library/Application Support/Sublime Text 3/Packages` (or wherever your Sublime Packages are) and do:
+# `git clone https://github.com/Phidica/sublime-fish.git`
+# `mv sublime-fish fish`
+# Restart Sublime, and you'll have syntax highlighting for coffeescript and fish.
 
 # Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
 # Now git will use --rebase by defualt
