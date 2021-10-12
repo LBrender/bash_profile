@@ -8,16 +8,16 @@
 # The prompt is now delightfully called "The Prompt", and decorated with a star.
 # Every line is timestamped, and if you're in a git repository, the name of the branch will be displayed.
 
-# If you're using Sublime Text 3, check if you have the 'subl' shortcut in place. 
+# The new terminal will prompt you to install git tools, do that.
 
-# If not: go to the terminal and type 'open /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-# Did that open Sublime? Good. Do you have `~/bin/subl` in your PATH? Good. Then type 
-# 'ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl' 
-# (Make sure that last directory exists first, and if it doesn't, create it.)
-# You now have the 'subl' shortcut
+# If this is a new laptop, you'll need to get new keys to communicate with github.
+# https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+# Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
+# Now git will use --rebase by defualt
 
 # Set up rulers in Sublime: Open a .py file. Go to "Sublime Text", "Preferences", "Settings - Syntax Specific"
-# In the file that opens, add "rulers": [80]" inside of the hash. Now all files that end in .py will display
+# In the file that opens, add "rulers": [80] inside of the hash. Now all files that end in .py will display
 # a ruler at the 80th character.
 
 # Set up key bindings in Sublime: Go to "Sublime Text", "Preferences", "Key Bindings". In the file that opens,
@@ -31,9 +31,6 @@
 # `git clone https://github.com/Phidica/sublime-fish.git`
 # `mv sublime-fish fish`
 # Restart Sublime, and you'll have syntax highlighting for coffeescript and fish.
-
-# Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
-# Now git will use --rebase by defualt
 
 # Configuring Our Prompt
 # ======================
@@ -107,7 +104,10 @@
     # get symlinked into /usr/local
     export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
 
-    export SUBLIME_PATH="~/bin/subl"
+    # We need the sublime path in the PATH so we can use the subl shortcut. Update this if neeed.
+    export SUBLIME_PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+
+    export PATH=/usr/local/bin:$PATH
 
     # Hint: You can interpolate a variable into a string by using the $VARIABLE notation as below.
 
@@ -119,6 +119,9 @@
     # Read http://blog.seldomatt.com/blog/2012/10/08/bash-and-the-one-true-path/ for more on that.
     export PATH="$SUBLIME_PATH:$USR_PATHS:$PATH"
 
+    # Make Sublime Text the default editor that opens from the terminal
+    export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+    # export EDITOR='subl -w'
 
 # Helpful Functions
 # =====================
@@ -128,27 +131,31 @@
 # HINT: It uses the built in USER variable to know your OS X username
 
 # USE: desktop
-#      desktop subfolder
 function desktop {
   cd /Users/$USER/Desktop/$@
 }
 
-# USE: cloud
-function cloud {
-  eval "$(pyenv init - bash)" && eval "$(pyenv virtualenv-init -)" && cd ~/Development/cloud-core
+# # USE: cloud
+# function cloud {
+#   eval "$(pyenv init - bash)" && eval "$(pyenv virtualenv-init -)" && cd ~/Development/cloud-core
+# }
+
+function frame {
+  cd ~/Development/Frame.io
 }
 
-# USE: development
-function development {
-  cd ~/Development
+function massdriver {
+  cd ~/Development/Frame.io/massdriver
 }
 
-# USE: boost
-function boost {
-  cd ~/Development/Boost
+function v4 {
+  cd ~/Development/Frame.io/web-app
 }
 
-# USE: notes
+function v3 {
+  cd ~/Development/Frame.io/web-client
+}
+
 function notes {
   cd ~/Desktop/notes
 }
@@ -184,6 +191,20 @@ function extract () {
     fi
 }
 
+# This is very much a WIP, do not try to use it.
+function set_upstream () {
+  # parse_git_branch delivers the branch in parentheses, so we have to cut the string on deliminator "(" 
+  # and select element two, then cut the string on deliminator ")" and select element one
+  # echo -n "git push --set-upstream origin " # <- print this frist part of the command with no newline
+  # echo $(parse_git_branch) | cut -d "(" -f 2 | cut -d ")" -f 1
+  git_branch=`$(parse_git_branch) | cut -d "(" -f 2 | cut -d ")" -f 1`
+  echo $git_branch
+  # command git push --set-upstream origin $(parse_git_branch) | cut -d "(" -f 2 | cut -d ")" -f 1
+}
+
+# massdriver;set_upstream
+
+
 # Aliases
 # =====================
   # LS
@@ -203,7 +224,7 @@ function extract () {
   alias gbb="git branch -b"
   alias gcm="git commit -m"
   alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
-  
+
   # Misc
   alias be="bundle exec"
   # alias subl="sublime" # This seemed like a good idea once, but now it seems to screw everything up.
@@ -217,10 +238,23 @@ function extract () {
   # Git Bash Completion
   # Will activate bash git completion if installed
   # via homebrew
-  if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
-  fi
+  # if [ -f `brew --prefix`/etc/bash_completion ]; then
+  #   . `brew --prefix`/etc/bash_completion
+  # fi
 
-# BOOST STUFF
-export AWS_PROFILE=boost-staging
 
+# Frame.io Stuff:
+
+. /usr/local/opt/asdf/libexec/asdf.sh
+. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+export MASSDRIVER_API_HOST=https://localhost:5555
+export API_URL=https://localhost:5555
+export SCHEMA_PATH=https://localhost:5555/graphql
+
+# alias aws-login=function(){eval $(command assume-role -duration 7h0m0s $@);}
+
+function aws-login {
+  command assume-role -duration 7h0m0s $@
+}
+
+export PATH="$HOME/.poetry/bin:$PATH"
