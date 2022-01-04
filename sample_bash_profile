@@ -21,8 +21,10 @@
 # a ruler at the 80th character.
 
 # Set up key bindings in Sublime: Go to "Sublime Text", "Preferences", "Key Bindings". In the file that opens,
-# add something like this:  {"keys": ["p", "d", "b", " "], "command": "insert_snippet", "args": {"contents": "import pdb; pdb.set_trace()"} },
-# Now "pdb " will always be replaced properly.
+# add:  
+# {"keys": ["p", "d", "b", " "], "command": "insert_snippet", "args": {"contents": "import pdb; pdb.set_trace()"} },
+# {"keys": ["p", "r", "y", " "], "command": "insert_snippet", "args": {"contents": "require IEx;IEx.pry()"} }
+# Now "pdb " and "pry " will always be replaced properly.
 
 # Get the coffeescript.tmlanguage and the coffeescript.tmpreferences files from this repo, and copy them into
 # Library/Application\ Support/Sublime\ Text\ 3/Packages. That's designed to work with Sublime 2, but it
@@ -91,6 +93,10 @@
 
   # Paths
 
+    # Our PATH variable is special and very important. Whenever we type a command into our shell,
+    # it will try to find that command within a directory that is defined in our PATH.
+    # Read http://blog.seldomatt.com/blog/2012/10/08/bash-and-the-one-true-path/ for more on that.
+
     # The USR_PATHS variable will just store all relevant /usr paths for easier usage
     # Each path is seperate via a : and we always use absolute paths.
 
@@ -107,20 +113,15 @@
     # We need the sublime path in the PATH so we can use the subl shortcut. Update this if neeed.
     export SUBLIME_PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 
-    export PATH=/usr/local/bin:$PATH
-
-    # Hint: You can interpolate a variable into a string by using the $VARIABLE notation as below.
+    export PYTHON_PACKAGES="/usr/local/lib/python3.9/site-packages"
 
     # We build our final PATH by combining the variables defined above
     # along with any previous values in the PATH variable.
-
-    # Our PATH variable is special and very important. Whenever we type a command into our shell,
-    # it will try to find that command within a directory that is defined in our PATH.
-    # Read http://blog.seldomatt.com/blog/2012/10/08/bash-and-the-one-true-path/ for more on that.
-    export PATH="$SUBLIME_PATH:$USR_PATHS:$PATH"
+    export PATH="$SUBLIME_PATH:$USR_PATHS:$PYTHON_PACKAGES:$PATH"
 
     # Make Sublime Text the default editor that opens from the terminal
-    export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+    # export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+    # This one works too, I'm not sure what the pro/con difference is between them.
     # export EDITOR='subl -w'
 
 # Helpful Functions
@@ -134,11 +135,6 @@
 function desktop {
   cd /Users/$USER/Desktop/$@
 }
-
-# # USE: cloud
-# function cloud {
-#   eval "$(pyenv init - bash)" && eval "$(pyenv virtualenv-init -)" && cd ~/Development/cloud-core
-# }
 
 function frame {
   cd ~/Development/Frame.io
@@ -191,19 +187,12 @@ function extract () {
     fi
 }
 
-# This is very much a WIP, do not try to use it.
 function set_upstream () {
-  # parse_git_branch delivers the branch in parentheses, so we have to cut the string on deliminator "(" 
-  # and select element two, then cut the string on deliminator ")" and select element one
-  # echo -n "git push --set-upstream origin " # <- print this frist part of the command with no newline
-  # echo $(parse_git_branch) | cut -d "(" -f 2 | cut -d ")" -f 1
-  git_branch=`$(parse_git_branch) | cut -d "(" -f 2 | cut -d ")" -f 1`
-  echo $git_branch
-  # command git push --set-upstream origin $(parse_git_branch) | cut -d "(" -f 2 | cut -d ")" -f 1
+  # This runs the command `git branch --no-color 2> /dev/null`, extracts only the line that
+  # begins with '*', then extracts from that everything except the '*'.
+  GIT_BRANCH=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  git push --set-upstream origin $GIT_BRANCH
 }
-
-# massdriver;set_upstream
-
 
 # Aliases
 # =====================
@@ -224,6 +213,7 @@ function set_upstream () {
   alias gbb="git branch -b"
   alias gcm="git commit -m"
   alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
+  alias new_scrap="git checkout qa;git fetch;git pull origin;git branch -d scrap;git checkout -b scrap;"
 
   # Misc
   alias be="bundle exec"
