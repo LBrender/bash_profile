@@ -56,7 +56,7 @@
     # ♥ ☆ - Keeping some cool ASCII Characters for reference
 
     # Here is where we actually export the PS1 Variable which stores the text for your prompt
-    export PS1="\[\e]2;\u@\h\a[\[\e[37;44;1m\]\t\[\e[0m\]]$BLUE\$(parse_git_branch) \[\e[32m\]\W\[\e[0m\]\n\[\e[0;34m\]The Prompt $CHAR \[\e[0m\]"
+    export PS1="[\e]2;\u@\h\a[\[\e[37;44;1m\]\t\[\e[0m\]]$BLUE\$(parse_git_branch) \[\e[32m\]\W\[\e[0m\]\n\[\e[0;34m\]The Prompt $CHAR \[\e[0m\]"
       PS2='> '
       PS4='+ '
     }
@@ -115,14 +115,19 @@
 
     export PYTHON_PACKAGES="/usr/local/lib/python3.9/site-packages"
 
+    # This has something to do with kubectl at Frame.io
+    export DOT_LOCAL="/Users/katebrender/.local/bin/"
+
+    export PSQL="/usr/local/opt/libpq/bin:"
+
     # We build our final PATH by combining the variables defined above
     # along with any previous values in the PATH variable.
-    export PATH="$SUBLIME_PATH:$USR_PATHS:$PYTHON_PACKAGES:$PATH"
+    export PATH="$SUBLIME_PATH:$USR_PATHS:$PYTHON_PACKAGES:$DOT_LOCAL:$PSQL:$PATH"
 
     # Make Sublime Text the default editor that opens from the terminal
     # export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
     # This one works too, I'm not sure what the pro/con difference is between them.
-    # export EDITOR='subl -w'
+    export EDITOR='subl -w'
 
 # Helpful Functions
 # =====================
@@ -240,6 +245,8 @@ function set_upstream () {
 export MASSDRIVER_API_HOST=https://localhost:5555
 export API_URL=https://localhost:5555
 export SCHEMA_PATH=https://localhost:5555/graphql
+
+export HOMEBREW_GITHUB_API_TOKEN=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
 
 # alias aws-login=function(){eval $(command assume-role -duration 7h0m0s $@);}
 
