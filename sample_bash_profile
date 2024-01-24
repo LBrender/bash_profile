@@ -12,29 +12,14 @@
 
 # If this is a new laptop, you'll need to get new keys to communicate with github.
 # https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+# Having gotten the key up and running, do the "configure SSO" option for it so you don't have to do the passphrase all the time.
 
 # Once git is up and running, run 'git config branch.autosetuprebase always' and then 'git config branch.*branch-name*.rebase true' for any branch you've already got going
 # Now git will use --rebase by defualt
 
-# Set up rulers in Sublime: Open a .py file. Go to "Sublime Text", "Preferences", "Settings - Syntax Specific"
-# In the file that opens, add "rulers": [80] inside of the hash. Now all files that end in .py will display
-# a ruler at the 80th character.
 
-# Set up key bindings in Sublime: Go to "Sublime Text", "Preferences", "Key Bindings". In the file that opens,
-# add:  
-# {"keys": ["p", "d", "b", " "], "command": "insert_snippet", "args": {"contents": "import pdb; pdb.set_trace()"} },
-# {"keys": ["p", "r", "y", " "], "command": "insert_snippet", "args": {"contents": "require IEx;IEx.pry()"} }
-# Now "pdb " and "pry " will always be replaced properly.
 
-# Get the coffeescript.tmlanguage and the coffeescript.tmpreferences files from this repo, and copy them into
-# Library/Application\ Support/Sublime\ Text\ 3/Packages. That's designed to work with Sublime 2, but it
-# works just as well with 3. 
-# cd to `/Users/katebrender/Library/Application Support/Sublime Text 3/Packages` (or wherever your Sublime Packages are) and do:
-# `git clone https://github.com/Phidica/sublime-fish.git`
-# `mv sublime-fish fish`
-# Restart Sublime, and you'll have syntax highlighting for coffeescript and fish.
-
-# Configuring Our Prompt
+# Configuring The Prompt
 # ======================
 
   # if you install git via homebrew, or install the bash autocompletion via homebrew, you get __git_ps1 which you can use in the PS1
@@ -110,10 +95,12 @@
     # get symlinked into /usr/local
     export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
 
-    # We need the sublime path in the PATH so we can use the subl shortcut. Update this if neeed.
+    # We need the sublime path in the PATH so we can use the subl shortcut. Update this if needed, or 
+    # move Sublime to the Applications folder.
     export SUBLIME_PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 
     export PYTHON_PACKAGES="/usr/local/lib/python3.9/site-packages"
+    export WKHTMLTOPDF="/Users/kbrender/Library/Python/3.9/lib/python/site-packages/wkhtmltopdf"
 
     # This has something to do with kubectl at Frame.io
     export DOT_LOCAL="/Users/katebrender/.local/bin/"
@@ -122,7 +109,7 @@
 
     # We build our final PATH by combining the variables defined above
     # along with any previous values in the PATH variable.
-    export PATH="$SUBLIME_PATH:$USR_PATHS:$PYTHON_PACKAGES:$DOT_LOCAL:$PSQL:$PATH"
+    export PATH="$SUBLIME_PATH:$USR_PATHS:$PYTHON_PACKAGES:$WKHTMLTOPDF:$DOT_LOCAL:$PSQL:$PATH"
 
     # Make Sublime Text the default editor that opens from the terminal
     # export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
@@ -159,6 +146,10 @@ function v3 {
 
 function notes {
   cd ~/Desktop/notes
+}
+
+function rebase {
+  git checkout develop; git fetch; git pull origin; git checkout -; git rebase origin/develop
 }
 
 # A function to easily grep for a matching process
@@ -218,7 +209,7 @@ function set_upstream () {
   alias gbb="git branch -b"
   alias gcm="git commit -m"
   alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
-  alias new_scrap="git checkout qa;git fetch;git pull origin;git branch -d scrap;git checkout -b scrap;"
+  alias new_scrap="git checkout develop;git fetch;git pull origin;git branch -d scrap;git checkout -b scrap;"
 
   # Misc
   alias be="bundle exec"
@@ -246,7 +237,7 @@ export MASSDRIVER_API_HOST=https://localhost:5555
 export API_URL=https://localhost:5555
 export SCHEMA_PATH=https://localhost:5555/graphql
 
-export HOMEBREW_GITHUB_API_TOKEN=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
+export HOMEBREW_GITHUB_API_TOKEN=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
 
 # alias aws-login=function(){eval $(command assume-role -duration 7h0m0s $@);}
 
