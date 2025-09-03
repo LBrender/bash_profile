@@ -1,7 +1,7 @@
 Create two files at the specified locations and copy the corresponding code into them. By the way, you can write any commands you like for sublime, 
 and insert them into any of seven menus https://www.sublimetext.com/docs/menus.html. It took me a while to figure out how, but once done it's pretty powerful.
 
-/Users/katebrender/Library/Application Support/Sublime Text 3/Packages/User/copy_relative_path.py:
+/Users/linkbrender/Library/Application Support/Sublime Text/Packages/User/copy_relative_path.py:
 
 import sublime, sublime_plugin
 from os.path import relpath
@@ -26,7 +26,7 @@ class CopyRelativePathCommand(sublime_plugin.TextCommand):
         return bool(self.view.file_name() and len(self.view.file_name()) > 0)
 
 
-/Users/katebrender/Library/Application Support/Sublime Text 3/Packages/User/Context.sublime-menu:
+/Users/linkbrender/Library/Application Support/Sublime Text/Packages/User/Context.sublime-menu:
 
 [
     { "caption": "-", "id": "file" },
