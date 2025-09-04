@@ -21,7 +21,7 @@
 # In the file that opens, add "rulers": [80] inside of the hash. Now all files that end in .py will display
 # a ruler at the 80th character.
 
-# Set up key bindings in Sublime: Go to "Sublime Text", "Preferences", "Key Bindings". In the file that opens,
+# Set up key bindings in Sublime: Go to "Sublime Text", "Settings", "Key Bindings". In the file that opens,
 # add:  
 # {"keys": ["p", "d", "b", " "], "command": "insert_snippet", "args": {"contents": "import pdb; pdb.set_trace()"} },
 # {"keys": ["p", "r", "y", " "], "command": "insert_snippet", "args": {"contents": "require IEx;IEx.pry()"} }
@@ -112,6 +112,8 @@
     # get symlinked into /usr/local
     export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
 
+    export HOMEBREW="/opt/homebrew/bin"
+
     # We need the sublime path in the PATH so we can use the subl shortcut. Update this if needed, or 
     # move Sublime to the Applications folder.
     export SUBLIME_PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin"
@@ -126,7 +128,7 @@
 
     # We build our final PATH by combining the variables defined above
     # along with any previous values in the PATH variable.
-    export PATH="$SUBLIME_PATH:$USR_PATHS:$PYTHON_PACKAGES:$WKHTMLTOPDF:$DOT_LOCAL:$PSQL:$PATH"
+    export PATH="$SUBLIME_PATH:$HOMEBREW:$USR_PATHS:$PYTHON_PACKAGES:$WKHTMLTOPDF:$DOT_LOCAL:$PSQL:$PATH"
 
     # Make Sublime Text the default editor that opens from the terminal
     # export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
@@ -145,20 +147,8 @@ function desktop {
   cd /Users/$USER/Desktop/$@
 }
 
-function frame {
-  cd ~/Development/Frame.io
-}
-
-function massdriver {
-  cd ~/Development/Frame.io/massdriver
-}
-
-function v4 {
-  cd ~/Development/Frame.io/web-app
-}
-
-function v3 {
-  cd ~/Development/Frame.io/web-client
+function etsy {
+  cd /Users/lbrender/Development/Etsyweb
 }
 
 function notes {
@@ -166,7 +156,7 @@ function notes {
 }
 
 function rebase {
-  git checkout develop; git fetch; git pull origin; git checkout -; git rebase origin/develop
+  git checkout main; git fetch; git pull origin; git checkout -; git rebase origin/main
 }
 
 # A function to easily grep for a matching process
@@ -226,7 +216,7 @@ function set_upstream () {
   alias gbb="git branch -b"
   alias gcm="git commit -m"
   alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
-  alias new_scrap="git checkout develop;git fetch;git pull origin;git branch -d scrap;git checkout -b scrap;"
+  alias new_scrap="git checkout main;git fetch;git pull origin;git branch -d scrap;git checkout -b scrap;"
 
   # Misc
   alias be="bundle exec"
@@ -246,20 +236,9 @@ function set_upstream () {
   # fi
 
 
-# Frame.io Stuff:
+# Etsy stuff:
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/lbrender/google-cloud-sdk/path.bash.inc' ]; then . '/Users/lbrender/google-cloud-sdk/path.bash.inc'; fi
 
-. /usr/local/opt/asdf/libexec/asdf.sh
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
-export MASSDRIVER_API_HOST=https://localhost:5555
-export API_URL=https://localhost:5555
-export SCHEMA_PATH=https://localhost:5555/graphql
-
-export HOMEBREW_GITHUB_API_TOKEN=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
-
-# alias aws-login=function(){eval $(command assume-role -duration 7h0m0s $@);}
-
-function aws-login {
-  command assume-role -duration 7h0m0s $@
-}
-
-export PATH="$HOME/.poetry/bin:$PATH"
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/lbrender/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/lbrender/google-cloud-sdk/completion.bash.inc'; fi
