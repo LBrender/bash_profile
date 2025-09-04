@@ -30,7 +30,7 @@
 # Get the coffeescript.tmlanguage and the coffeescript.tmpreferences files from this repo, and copy them into
 # Library/Application\ Support/Sublime\ Text\ 3/Packages. That's designed to work with Sublime 2, but it
 # works just as well with 3. 
-# cd to `/Users/katebrender/Library/Application Support/Sublime Text 3/Packages` (or wherever your Sublime Packages are) and do:
+# cd to `/Users/lbrender/Library/Application Support/Sublime Text 3/Packages` (or wherever your Sublime Packages are) and do:
 # `git clone https://github.com/Phidica/sublime-fish.git`
 # `mv sublime-fish fish`
 # Restart Sublime, and you'll have syntax highlighting for coffeescript and fish.
@@ -110,7 +110,7 @@
     # storing the binaries (programs) that our system would want.
     # Also, Homebrew adopts this convetion so things installed via Homebrew
     # get symlinked into /usr/local
-    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/katebrender/Library/Python/2.7/bin"
+    export USR_PATHS="/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/Users/lbrender/Library/Python/2.7/bin"
 
     export HOMEBREW="/opt/homebrew/bin"
 
@@ -119,10 +119,10 @@
     export SUBLIME_PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 
     export PYTHON_PACKAGES="/usr/local/lib/python3.9/site-packages"
-    export WKHTMLTOPDF="/Users/kbrender/Library/Python/3.9/lib/python/site-packages/wkhtmltopdf"
+    export WKHTMLTOPDF="/Users/lbrender/Library/Python/3.9/lib/python/site-packages/wkhtmltopdf"
 
     # This has something to do with kubectl at Frame.io
-    export DOT_LOCAL="/Users/katebrender/.local/bin/"
+    export DOT_LOCAL="/Users/lbrender/.local/bin/"
 
     export PSQL="/usr/local/opt/libpq/bin:"
 
