@@ -45,7 +45,8 @@
 
   # This function is called in your prompt to output your active git branch.
   function parse_git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+
   }
 
   # This function builds your prompt. It is called below
@@ -121,9 +122,6 @@
     export PYTHON_PACKAGES="/usr/local/lib/python3.9/site-packages"
     export WKHTMLTOPDF="/Users/lbrender/Library/Python/3.9/lib/python/site-packages/wkhtmltopdf"
 
-    # This has something to do with kubectl at Frame.io
-    export DOT_LOCAL="/Users/lbrender/.local/bin/"
-
     export PSQL="/usr/local/opt/libpq/bin:"
 
     # We build our final PATH by combining the variables defined above
@@ -131,9 +129,9 @@
     export PATH="$SUBLIME_PATH:$HOMEBREW:$USR_PATHS:$PYTHON_PACKAGES:$WKHTMLTOPDF:$DOT_LOCAL:$PSQL:$PATH"
 
     # Make Sublime Text the default editor that opens from the terminal
-    # export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+    export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --wait"
     # This one works too, I'm not sure what the pro/con difference is between them.
-    export EDITOR='subl -w'
+    # export EDITOR='subl -w'
 
 # Helpful Functions
 # =====================
@@ -156,7 +154,7 @@ function notes {
 }
 
 function rebase {
-  git checkout main; git fetch; git pull origin; git checkout -; git rebase origin/main
+  git checkout main; git fetch; git checkout -; git rebase origin/main
 }
 
 # A function to easily grep for a matching process
@@ -197,6 +195,29 @@ function set_upstream () {
   git push --set-upstream origin $GIT_BRANCH
 }
 
+function set_upstream_f() {
+  # This runs the command `git branch --no-color 2> /dev/null`, extracts only the line that
+  # begins with '*', then extracts from that everything except the '*'. Same as above, but with force flag.
+  GIT_BRANCH=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  git push -f --set-upstream origin $GIT_BRANCH
+}
+
+function vm () {
+  # This is diabolical. It tries to ssh to the vm, and if that's not successful, it restarts the vm and calls
+  # itself again. If _that_ fails, it does the gcloud auth and calls itself again. Backwards-stepping-retries.
+  reset; ssh lbrender.etsyweb.devenv.etsycloud.com ||
+  { etsywebctl vm start lbrender && vm; } || { gcloud auth login --update-adc && vm; }
+}
+
+# function vm () {
+#   # This tries to ssh to the vm, and if that's not successful, 
+#   # it restarts the vm and calls the ssh command again. If _that_ fails, 
+#   # it does the gcloud auth and then starts the vm and then calls the ssh command again. Backwards-stepping-retries.
+#   reset; ssh lbrender.etsyweb.devenv.etsycloud.com ||
+#   { etsywebctl vm start lbrender && ssh lbrender.etsyweb.devenv.etsycloud.com; } ||
+#   { gcloud auth login --update-adc && etsywebctl vm start lbrender && ssh lbrender.etsyweb.devenv.etsycloud.com; }
+# }
+
 # Aliases
 # =====================
   # LS
@@ -215,7 +236,7 @@ function set_upstream () {
   alias gcam="git commit -am"
   alias gbb="git branch -b"
   alias gcm="git commit -m"
-  alias gup="git fetch -a && git branch -f master origin/master && git rebase origin/master"
+  alias gup="git fetch -a && git branch -f main origin/main && git rebase origin/main"
   alias new_scrap="git checkout main;git fetch;git pull origin;git branch -d scrap;git checkout -b scrap;"
 
   # Misc
